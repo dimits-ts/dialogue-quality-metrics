@@ -1,1 +1,0 @@
-from .controversy import controversy
