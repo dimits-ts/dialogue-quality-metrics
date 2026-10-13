@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discomet"
+version = "0.1.0.dev0"
+description = "Metrics for evaluating the quality of online discussions."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = "GPL-3.0"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "convokit==3.5.0",
+    "matplotlib>=3.7",
+    # ConvoKit 3.5.0 imports pkg_resources, which setuptools removed in version 81.
+    "setuptools<81",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Sphinx",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Typing :: Typed",
+    "Intended Audience :: Science/Research"
+]
+
+
+
+# The spaCy model used by politeness_strategies is not on PyPI, so it cannot be
+# a dependency here. After installing, run:
+#     python -m spacy download en_core_web_sm
+
+[tool.setuptools.packages.find]
+where = ["src"]

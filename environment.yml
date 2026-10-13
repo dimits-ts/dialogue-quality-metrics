@@ -1,0 +1,16 @@
+name: discomet
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10,<3.13
+  - pip
+  - matplotlib>=3.7
+  - spacy=3.8
+  # spaCy English model needed by politeness_strategies (ConvoKit's text parser)
+  - spacy-model-en_core_web_sm=3.8
+  - pip:
+      # ConvoKit 3.5.0 imports pkg_resources, removed in setuptools 81
+      - "setuptools<81"
+      - "convokit==3.5.0"
+      # install the package itself from the repository root (editable)
+      - -e .
