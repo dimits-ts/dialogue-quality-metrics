@@ -45,9 +45,7 @@ def politeness_strategies(
         ValueError: If the input lists have different lengths or ids repeat.
         OSError: If the spaCy model is not installed.
     """
-    utterances = build_utterances(
-        message_list, speakers_list, msgsid_list, disc_id
-    )
+    utterances = build_utterances(message_list, speakers_list, msgsid_list, disc_id)
     corpus = Corpus(utterances=utterances)
     logger.info("Politeness: corpus of %d utterances created", len(utterances))
 
@@ -73,9 +71,7 @@ def politeness_strategies(
     for source_utt in utterances:  # keep the caller's order
         utt = corpus.get_utterance(source_utt.id)
         strategies = utt.meta[transformer.strategy_attribute_name]
-        per_utterance.append(
-            {utt.id: {k: float(v) for k, v in strategies.items()}}
-        )
+        per_utterance.append({utt.id: {k: float(v) for k, v in strategies.items()}})
     result = {disc_id: per_utterance}
     save_json(result, "politeness_per_utt", disc_id, output_dir)
     return result

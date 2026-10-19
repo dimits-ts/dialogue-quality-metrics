@@ -66,9 +66,7 @@ def plot_conversation_structure(
 
     n_lines = max(1, text.count("\n"))
     width = max((len(line) for line in text.splitlines()), default=10)
-    fig = Figure(
-        figsize=(max(4.0, 0.12 * width + 1), max(2.0, 0.25 * n_lines + 0.5))
-    )
+    fig = Figure(figsize=(max(4.0, 0.12 * width + 1), max(2.0, 0.25 * n_lines + 0.5)))
     ax = fig.add_subplot(111)
     ax.text(
         0,

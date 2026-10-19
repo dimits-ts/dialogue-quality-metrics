@@ -9,9 +9,7 @@ from convokit import Coordination, Corpus
 from .._utils import build_utterances, logger, save_json
 
 
-def _coordination_summaries(
-    utterances: Sequence, speaker_ids: Sequence[str]
-) -> dict:
+def _coordination_summaries(utterances: Sequence, speaker_ids: Sequence[str]) -> dict:
     """Fit ConvoKit's Coordination on ``utterances`` and summarise it per speaker."""
     corpus = Corpus(utterances=list(utterances))
     coord = Coordination()

@@ -17,12 +17,8 @@ def check_same_length(**named_lists: Sequence) -> None:
     """Raise ``ValueError`` if the given sequences do not all have the same length."""
     lengths = {name: len(values) for name, values in named_lists.items()}
     if len(set(lengths.values())) > 1:
-        details = ", ".join(
-            f"{name}={length}" for name, length in lengths.items()
-        )
-        raise ValueError(
-            f"Input lists must have the same length, got: {details}."
-        )
+        details = ", ".join(f"{name}={length}" for name, length in lengths.items())
+        raise ValueError(f"Input lists must have the same length, got: {details}.")
 
 
 def build_utterances(
@@ -62,9 +58,7 @@ def build_utterances(
     if replyto_list is not None:
         check_same_length(message_list=message_list, replyto_list=replyto_list)
     if timestamps_list is not None:
-        check_same_length(
-            message_list=message_list, timestamps_list=timestamps_list
-        )
+        check_same_length(message_list=message_list, timestamps_list=timestamps_list)
 
     ids = [str(msg_id) for msg_id in msgsid_list]
     if len(set(ids)) != len(ids):
@@ -73,9 +67,7 @@ def build_utterances(
 
     speakers = {str(s): Speaker(id=str(s)) for s in set(speakers_list)}
     utterances = []
-    for i, (text, speaker, msg_id) in enumerate(
-        zip(message_list, speakers_list, ids)
-    ):
+    for i, (text, speaker, msg_id) in enumerate(zip(message_list, speakers_list, ids)):
         reply_to = None
         if replyto_list is not None:
             parent = replyto_list[i]
@@ -124,8 +116,6 @@ def save_json(
     stamp = time.strftime("%Y%m%d-%H%M%S")
     path = os.path.join(output_dir, f"{name}_{disc_id}_{stamp}.json")
     with open(path, "w", encoding="utf-8") as fout:
-        json.dump(
-            data, fout, ensure_ascii=False, indent=4, default=_json_default
-        )
+        json.dump(data, fout, ensure_ascii=False, indent=4, default=_json_default)
     logger.info("Saved %s", path)
     return path
