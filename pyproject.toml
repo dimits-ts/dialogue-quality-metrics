@@ -34,11 +34,16 @@ classifiers = [
     "Intended Audience :: Science/Research"
 ]
 
-
-
 # The spaCy model used by politeness_strategies is not on PyPI, so it cannot be
 # a dependency here. After installing, run:
 #     python -m spacy download en_core_web_sm
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.optional-dependencies]
+dev = [
+  "build",
+  "twine",
+  "pytest"
+]

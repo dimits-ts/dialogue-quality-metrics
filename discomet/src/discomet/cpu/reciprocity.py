@@ -14,10 +14,14 @@ def _motif_counts(
 ) -> dict[str, float]:
     """Return the HyperConvo motif-count features of one discussion."""
     corpus = Corpus(utterances=list(utterances))
-    HyperConvo(prefix_len=prefix_len, min_convo_len=min_convo_len).transform(corpus)
+    HyperConvo(prefix_len=prefix_len, min_convo_len=min_convo_len).transform(
+        corpus
+    )
     features = corpus.get_vector_matrix("hyperconvo").to_dataframe().fillna(-1)
     # Keep motif counts; drop the "mid" (mid-thread) variants, as the original package did.
-    motif_columns = [c for c in features.columns if "count" in c and "mid" not in c]
+    motif_columns = [
+        c for c in features.columns if "count" in c and "mid" not in c
+    ]
     by_conversation = features[motif_columns].transpose().to_dict()
     # Conversations shorter than min_convo_len are dropped by HyperConvo.
     return by_conversation.get(str(disc_id), {})
@@ -71,12 +75,21 @@ def reciprocity_motifs(
             unknown reply-to ids).
     """
     utterances = build_utterances(
-        message_list, speakers_list, msgsid_list, disc_id, replyto_list, timestamps_list
+        message_list,
+        speakers_list,
+        msgsid_list,
+        disc_id,
+        replyto_list,
+        timestamps_list,
     )
     logger.info("Reciprocity: %d utterances", len(utterances))
 
     if discussion_level:
-        result = {disc_id: _motif_counts(utterances, disc_id, prefix_len, min_convo_len)}
+        result = {
+            disc_id: _motif_counts(
+                utterances, disc_id, prefix_len, min_convo_len
+            )
+        }
         save_json(result, "reciprocity_per_discussion", disc_id, output_dir)
         return result
 
