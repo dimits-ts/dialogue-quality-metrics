@@ -2,28 +2,38 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   format:
-    name: Check formatting
+    name: Format code with black
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to push the formatting commit
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@24.10.0
         with:
-          options: "--check --diff"
+          options: "--verbose"
           src: "."
+      - name: Commit formatting changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: format code with black"
 
   test:
     name: Unit tests (Python ${{ matrix.python-version }})
+    needs: format
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
+      # Check out the branch tip so the formatting commit (if any) is included.
+      # Commits pushed with GITHUB_TOKEN don't trigger a new workflow run.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
